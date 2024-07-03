@@ -253,7 +253,7 @@ Query Parameter   | Type   | Description
 
 
 Пример запроса:<br>
-```GET: /api/equipment-type```
+```GET: /api/equipment-type?q```
 
 Ответ:<br>
 ```
