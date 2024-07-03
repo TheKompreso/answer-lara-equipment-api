@@ -1,0 +1,1 @@
+# answer-lara-equipment-api
