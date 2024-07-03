@@ -16,11 +16,13 @@ class EquipmentTypeController extends Controller
     public function index(EquipmentTypeRequest $request)
     {
         $query = EquipmentType::query();
-        if(!$request->has('q'))
+        if($request->hasAny(['name', 'mask']))
         {
             if($request->has('name')) $query->where('name', $request->name);
             if($request->has('mask')) $query->where('mask', $request->mask);
         }
+        else if(!$request->has('q')) return response()->json(['error' => 'Parameters not specified'], 400);
+
         return new EquipmentTypeCollection($query->paginate(config('api.paginate_page_size', '')));
     }
 }

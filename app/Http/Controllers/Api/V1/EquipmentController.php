@@ -25,12 +25,14 @@ class EquipmentController extends Controller
     public function index(EquipmentRequest $request)
     {
         $query = Equipment::query();
-        if(!$request->has('q'))
+        if($request->hasAny(['equipment_type_id', 'serial_number', 'desc']))
         {
             if($request->has('equipment_type_id')) $query->where('equipment_type_id', $request->equipment_type_id);
             if($request->has('serial_number')) $query->where('serial_number', $request->serial_number);
             if($request->has('desc')) $query->where('desc', $request->desc);
         }
+        else if(!$request->has('q')) return response()->json(['error' => 'Parameters not specified'], 400);
+
         return new EquipmentCollection($query->paginate(config('api.paginate_page_size', '')));
     }
     public function store(EquipmentStoreRequest $request)
