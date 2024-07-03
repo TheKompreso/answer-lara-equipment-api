@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EquipmentStoreRequest;
-use App\Http\Requests\EquipmentUpdateRequest;
+use App\Http\Requests\EquipmentRequest;
 use App\Http\Resources\EquipmentCollection;
 use App\Http\Resources\EquipmentResource;
 use App\Models\Equipment;
@@ -22,9 +22,16 @@ class EquipmentController extends Controller
     }
 
     //
-    public function index()
+    public function index(EquipmentRequest $request)
     {
-        return new EquipmentCollection(Equipment::paginate(config('api.paginate_page_size', '')));
+        $query = Equipment::query();
+        if(!$request->has('q'))
+        {
+            if($request->has('equipment_type_id')) $query->where('equipment_type_id', $request->equipment_type_id);
+            if($request->has('serial_number')) $query->where('serial_number', $request->serial_number);
+            if($request->has('desc')) $query->where('desc', $request->desc);
+        }
+        return new EquipmentCollection($query->paginate(config('api.paginate_page_size', '')));
     }
     public function store(EquipmentStoreRequest $request)
     {
@@ -47,7 +54,7 @@ class EquipmentController extends Controller
         return $response;
     }
 
-    public function update(EquipmentUpdateRequest $request, int $id)
+    public function update(EquipmentRequest $request, int $id)
     {
         $equipment = Equipment::where('id', $id)->first();
         if($equipment == null) return response()->json(['error' => 'Not found'], 404);

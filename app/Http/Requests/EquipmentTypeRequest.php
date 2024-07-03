@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EquipmentUpdateRequest extends FormRequest
+class EquipmentTypeRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,9 +14,9 @@ class EquipmentUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'equipment_type_id' => 'integer',
-            'serial_number' => 'string',
-            'desc' => 'string|nullable'
+            'mask' => 'string',
+            'name' => 'string'
+            //
         ];
     }
 }
