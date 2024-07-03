@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('equipment_type_id')->index();
             $table->string('serial_number')->index();
             $table->text('desc')->nullable();
+            $table->softDeletes();
             $table->timestamps();
             $table->unique(['equipment_type_id', 'serial_number']);
             $table->foreign('equipment_type_id')->references('id')->on('equipment_types');

@@ -14,6 +14,6 @@ class EquipmentTypeController extends Controller
     //
     public function index()
     {
-        return new EquipmentTypeCollection(EquipmentType::paginate());
+        return new EquipmentTypeCollection(EquipmentType::paginate(config('api.paginate_page_size', '')));
     }
 }
