@@ -2,18 +2,11 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Factory as ValidationFactory;
 use Illuminate\Foundation\Http\FormRequest;
 
 class EquipmentStoreRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return false;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -22,7 +15,10 @@ class EquipmentStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'equipments' => 'required|array',
+            'equipments.*.equipment_type_id' => 'required|integer',
+            'equipments.*.serial_number' => 'required|string',
+            'equipments.*.desc' => 'string|nullable',
         ];
     }
 }
