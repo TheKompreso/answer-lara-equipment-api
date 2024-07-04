@@ -11,7 +11,6 @@ use App\Models\EquipmentType;
 
 class EquipmentTypeController extends Controller
 {
-    //
     /**
      * @param EquipmentTypeRequest $request
      * @return EquipmentTypeCollection|JsonResponse
@@ -21,10 +20,15 @@ class EquipmentTypeController extends Controller
         $query = EquipmentType::query();
         if($request->hasAny(['name', 'mask']))
         {
-            if($request->has('name')) $query->where('name', $request->name);
-            if($request->has('mask')) $query->where('mask', $request->mask);
+            if($request->has('name')) $query->where('name', 'like', '%'.$request->name.'%');
+            if($request->has('mask')) $query->where('mask', 'like', '%'.$request->mask.'%');
         }
-        else if(!$request->has('q')) return response()->json(['error' => 'Parameters not specified'], 400);
+        else if($request->has('q'))
+        {
+            $query->where('name', 'like', '%'.$request->q.'%')->
+                orWhere('mask', 'like', '%'.$request->q.'%');
+        }
+        else $query->all();
         return new EquipmentTypeCollection($query->paginate(config('api.paginate_page_size', '')));
     }
 }

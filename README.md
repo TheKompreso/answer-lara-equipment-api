@@ -46,14 +46,14 @@ Workspace в Postman: https://www.postman.com/kompreso/workspace/answer-equipmen
 
 Query Parameter   | Type   | Description
 ----------------- |--------| ------------------------------------------------------------------
-``q``        | string | Укажите параметр ``q`` для получение всех записей без фильтрации.
 ``equipment_type_id`` | int    | Выполняет поиск по ID типа оборудования.
 ``serial_number`` | string | Выполняет поиск по серийному номеру оборудования.
 ``desc`` | string | Выполняет поиск по примечанию/комментарию к оборудованию.
+``q``        | string | Выполняет поиск по всем полям (equipment_type_id, serial_number, desc).
 
 
 Пример запроса:<br>
-```GET: /api/equipment?q```
+```GET: /api/equipment?q=NITRO```
 
 Ответ:<br>
 ```
@@ -260,13 +260,13 @@ Query Parameter   | Type   | Description
 
 Query Parameter   | Type   | Description
 ----------------- |--------| ------------------------------------------------------------------
-``q``        | string | Укажите параметр ``q`` для получение всех записей без фильтрации.
 ``name`` | string | Выполняет поиск по имени типа оборудования.
 ``mask`` | string | Выполняет поиск по маске оборудования.
+``q``   | string | Выполняет поиск по всем полям (name, mask).
 
 
 Пример запроса:<br>
-```GET: /api/equipment-type?q```
+```GET: /api/equipment-type?q=Link```
 
 Ответ:<br>
 ```

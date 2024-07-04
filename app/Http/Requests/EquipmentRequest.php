@@ -9,6 +9,7 @@ use Illuminate\Foundation\Http\FormRequest;
  * @property string desc
  * @property string equipment_type_id
  * @property string serial_number
+ * @property string q
  */
 class EquipmentRequest extends FormRequest
 {
@@ -22,6 +23,7 @@ class EquipmentRequest extends FormRequest
         return [
             'equipment_type_id' => 'integer',
             'serial_number' => 'string',
+            'q' => 'string',
             'desc' => 'string|nullable'
         ];
     }

@@ -2,12 +2,13 @@
 
 namespace App\Http\Resources;
 
+use App\Models\EquipmentType;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * @property int id
- * @property int equipmentType
+ * @property EquipmentType equipmentType
  * @property string serial_number
  * @property string desc
  * @property string created_at

@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @method static Builder|Equipment query()
- * @method static Builder|Equipment where()
  * @method static Builder|Equipment create()
+ * @property EquipmentType equipmentType
  */
 class Equipment extends Model
 {

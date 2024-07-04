@@ -10,7 +10,6 @@ use App\Http\Resources\EquipmentResource;
 use App\Models\Equipment;
 use App\Services\EquipmentService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class EquipmentController extends Controller
 {
@@ -22,20 +21,34 @@ class EquipmentController extends Controller
         $this->equipmentService = new EquipmentService();
     }
 
+    /**
+     * @param EquipmentRequest $request
+     * @return JsonResponse|EquipmentCollection
+     */
     public function index(EquipmentRequest $request): JsonResponse|EquipmentCollection
     {
         $query = Equipment::query();
         if($request->hasAny(['equipment_type_id', 'serial_number', 'desc']))
         {
-            if($request->has('equipment_type_id')) $query->where('equipment_type_id', $request->equipment_type_id);
-            if($request->has('serial_number')) $query->where('serial_number', $request->serial_number);
-            if($request->has('desc')) $query->where('desc', $request->desc);
+            if($request->has('equipment_type_id')) $query->where('equipment_type_id', 'like', '%'.$request->equipment_type_id.'%');
+            if($request->has('serial_number')) $query->where('serial_number', 'like', '%'.$request->serial_number.'%');
+            if($request->has('desc')) $query->where('desc', 'like', '%'.$request->desc.'%');
         }
-        else if(!$request->has('q')) return response()->json(['error' => 'Parameters not specified'], 400);
+        else if($request->has('q'))
+        {
+            $query->where('equipment_type_id', 'like', '%'.$request->q.'%')->
+                orWhere('serial_number', 'like', '%'.$request->q.'%')->
+                orWhere('desc', 'like', '%'.$request->q.'%');
+        }
+        else $query->all();
 
         return new EquipmentCollection($query->paginate(config('api.paginate_page_size', '')));
     }
 
+    /**
+     * @param EquipmentStoreRequest $request
+     * @return JsonResponse
+     */
     public function store(EquipmentStoreRequest $request): JsonResponse
     {
         $response = [
@@ -57,24 +70,31 @@ class EquipmentController extends Controller
         return response()->json($response, count($response["success"]) > 0 ? 201 : 400);
     }
 
-    public function update(EquipmentRequest $request, int $id): Equipment|JsonResponse
+    /**
+     * @param EquipmentRequest $request
+     * @param Equipment $equipment
+     * @return Equipment|JsonResponse
+     */
+    public function update(EquipmentRequest $request, Equipment $equipment): Equipment|JsonResponse
     {
-        $equipment = Equipment::where('id', $id)->first();
-        if($equipment == null) return response()->json(['error' => 'Not found'], 404);
         return $this->equipmentService->update($equipment, $request->input());
     }
 
-    public function show(Request $request, int $id): JsonResponse|EquipmentResource
+    /**
+     * @param Equipment $equipment
+     * @return JsonResponse|EquipmentResource
+     */
+    public function show(Equipment $equipment): JsonResponse|EquipmentResource
     {
-        $equipment = Equipment::where('id', $id)->first();
-        if($equipment == null) return response()->json(['error' => 'Not found'], 404);
         return new EquipmentResource($equipment);
     }
 
-    public function destroy(int $id): JsonResponse
+    /**
+     * @param Equipment $equipment
+     * @return JsonResponse
+     */
+    public function destroy(Equipment $equipment): JsonResponse
     {
-        $equipment = Equipment::where('id', $id)->first();
-        if($equipment == null) return response()->json(['error' => 'Not found'], 404);
         $equipment->delete();
         return response()->json(['success' => 'Deleted'], 200);
     }

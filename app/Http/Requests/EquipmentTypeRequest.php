@@ -8,6 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 /**
  * @property string mask
  * @property string name
+ * @property string q
  */
 class EquipmentTypeRequest extends FormRequest
 {
@@ -20,7 +21,8 @@ class EquipmentTypeRequest extends FormRequest
     {
         return [
             'mask' => 'string',
-            'name' => 'string'
+            'name' => 'string',
+            'q' => 'string'
             //
         ];
     }
