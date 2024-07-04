@@ -38,6 +38,17 @@ php artisan migrate
 php artisan serve
 ```
 6. Переходите в программу Postman и начинайте тестирование
+## SQL наполнение
+<details>
+<p>Это можно было бы сделать через внутренние инструменты Laravel (seeder или factory), но в данной ситуации быстрее просто вставить записи в базу данных и продублировать их сюда как команды.</p>
+<br>    
+SQL-запрос:
+    
+```
+  Будет через 10 минут (08:45 по МСК) 
+```
+</details>
+
 ## API-методы
 Workspace в Postman: https://www.postman.com/kompreso/workspace/answer-equipment-api/overview (для доступа к localhost требуется скачать и установить приложение Postman)
 
