@@ -35,7 +35,7 @@ php artisan migrate
 ```
 
 ## API-методы
-Workspace в Postman: https://www.postman.com/cryosat-candidate-11818601/workspace/answer-equipment-api/overview
+Workspace в Postman: https://www.postman.com/kompreso/workspace/answer-equipment-api/overview
 
 ### GET: /api/equipment
 Получить список оборудования.
