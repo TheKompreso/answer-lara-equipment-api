@@ -25,6 +25,10 @@ DB_DATABASE=YOUR_laravel_db
 DB_USERNAME=YOUR_laravel_user
 DB_PASSWORD=YOUR_password
 ```
+Также можно отключить Debug-мод при выпуске API в открытый доступ, если это требуется:
+```
+APP_DEBUG=false
+```
 4. Запустите миграцию базы данных
 ```
 php artisan migrate

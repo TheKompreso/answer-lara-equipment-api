@@ -53,7 +53,7 @@ class EquipmentController extends Controller
                 $response["errors"][$i] = $result;
             }
         }
-        return $response;
+        return response()->json($response, count($response["success"]) > 0 ? 201 : 400);
     }
 
     public function update(EquipmentRequest $request, int $id)
