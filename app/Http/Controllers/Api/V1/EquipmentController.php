@@ -9,11 +9,12 @@ use App\Http\Resources\EquipmentCollection;
 use App\Http\Resources\EquipmentResource;
 use App\Models\Equipment;
 use App\Services\EquipmentService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class EquipmentController extends Controller
 {
-    private $equipmentService;
+    private EquipmentService $equipmentService;
 
     public function __construct()
     {
@@ -21,8 +22,7 @@ class EquipmentController extends Controller
         $this->equipmentService = new EquipmentService();
     }
 
-    //
-    public function index(EquipmentRequest $request)
+    public function index(EquipmentRequest $request): JsonResponse|EquipmentCollection
     {
         $query = Equipment::query();
         if($request->hasAny(['equipment_type_id', 'serial_number', 'desc']))
@@ -35,7 +35,8 @@ class EquipmentController extends Controller
 
         return new EquipmentCollection($query->paginate(config('api.paginate_page_size', '')));
     }
-    public function store(EquipmentStoreRequest $request)
+
+    public function store(EquipmentStoreRequest $request): JsonResponse
     {
         $response = [
             'errors' => [],
@@ -56,20 +57,21 @@ class EquipmentController extends Controller
         return response()->json($response, count($response["success"]) > 0 ? 201 : 400);
     }
 
-    public function update(EquipmentRequest $request, int $id)
+    public function update(EquipmentRequest $request, int $id): Equipment|JsonResponse
     {
         $equipment = Equipment::where('id', $id)->first();
         if($equipment == null) return response()->json(['error' => 'Not found'], 404);
         return $this->equipmentService->update($equipment, $request->input());
     }
 
-    public function show(Request $request, int $id)
+    public function show(Request $request, int $id): JsonResponse|EquipmentResource
     {
         $equipment = Equipment::where('id', $id)->first();
         if($equipment == null) return response()->json(['error' => 'Not found'], 404);
         return new EquipmentResource($equipment);
     }
-    public function destroy(int $id)
+
+    public function destroy(int $id): JsonResponse
     {
         $equipment = Equipment::where('id', $id)->first();
         if($equipment == null) return response()->json(['error' => 'Not found'], 404);

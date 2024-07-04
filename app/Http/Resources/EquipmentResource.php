@@ -5,6 +5,14 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @property int id
+ * @property int equipmentType
+ * @property string serial_number
+ * @property string desc
+ * @property string created_at
+ * @property string updated_at
+ */
 class EquipmentResource extends JsonResource
 {
     public static $wrap = 'equipment';

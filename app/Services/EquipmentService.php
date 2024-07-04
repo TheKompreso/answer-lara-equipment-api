@@ -2,16 +2,20 @@
 
 namespace App\Services;
 
-use App\Http\Requests\EquipmentStoreRequest;
 use App\Models\Equipment;
 use App\Models\EquipmentType;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
-use function Laravel\Prompts\error;
 
 class EquipmentService
 {
-    public function update(Equipment $equipment, array $array)
+    /**
+     * @param Equipment $equipment
+     * @param array $array
+     * @return Equipment|JsonResponse
+     */
+    public function update(Equipment $equipment, array $array): Equipment|JsonResponse
     {
         if(!isset($array['equipment_type_id'])) $array['equipment_type_id'] = $equipment['equipment_type_id'];
         if(!isset($array['serial_number'])) $array['serial_number'] = $equipment['serial_number'];
@@ -23,24 +27,26 @@ class EquipmentService
             ]);
 
         if($validator->fails()){
-            return $validator->errors()->messages();
+            return response()->json($validator->errors()->messages(), 400);
         }
-
-
 
         $equipmentType = EquipmentType::where('id', $array['equipment_type_id'])->first();
         if($equipmentType == null){
-            return ['error' => 'The equipment type does not exist.'];
+            return response()->json(['error' => 'The equipment type does not exist.'], 400);
         }
         if(!$equipmentType->IsSeriesMatchMask($array['serial_number'])){
-            return ['error' => 'The serial_number doesn\'t match the mask.'];
+            return response()->json(['error' => 'The serial_number doesn\'t match the mask.'], 400);
         }
 
         $equipment->update($array);
         return $equipment;
     }
 
-    public function make(array $array)
+    /**
+     * @param array $array
+     * @return Equipment|Builder|array
+     */
+    public function make(array $array): Equipment|Builder|array
     {
         $validator = Validator::make($array,
             [
@@ -65,11 +71,10 @@ class EquipmentService
             return $validator->errors()->messages();
         }
 
-        $equipment = Equipment::create([
+        return Equipment::create([
             'equipment_type_id' => $array['equipment_type_id'],
             'serial_number' => $array['serial_number'],
             'desc' => $array['desc']
         ]);
-        return $equipment;
     }
 }
