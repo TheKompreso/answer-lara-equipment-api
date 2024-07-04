@@ -35,7 +35,7 @@ php artisan migrate
 ```
 
 ## API-методы
-Workspace в Postman: https://www.postman.com/kompreso/workspace/answer-equipment-api/overview
+Workspace в Postman: https://www.postman.com/kompreso/workspace/answer-equipment-api/overview (для доступа к localhost требуется скачать и установить приложение Postman)
 
 ### GET: /api/equipment
 Получить список оборудования.
