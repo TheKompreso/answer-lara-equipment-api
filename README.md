@@ -2,6 +2,9 @@
 ## Требования
 - Laravel 11.x требует, как минимум, версию PHP 8.2.
 - Composer
+## Рекомендуемое вспомогательное ПО
+- [PHPStorm](https://www.jetbrains.com/ru-ru/phpstorm/)
+- [Postman](https://www.postman.com)
 ## Установка
 1. Скачайте проект:
    - Вариант 1: скачайте [архив](https://github.com/TheKompreso/answer-lara-equipment-api/archive/refs/heads/master.zip) с проектом  и разархивируйте в нужную папку.
@@ -28,6 +31,8 @@ php artisan migrate
 ```
 
 ## API-методы
+Workspace в Postman: https://www.postman.com/cryosat-candidate-11818601/workspace/answer-equipment-api/overview
+
 ### GET: /api/equipment
 Получить список оборудования.
 
