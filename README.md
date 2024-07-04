@@ -16,7 +16,7 @@ git clone https://github.com/TheKompreso/answer-lara-equipment-api
 ```
 composer update
 ```
-3. Настройте файл .env, а именно связь с вашей базой данных MySQL. Найдите строчку '<b>DB_CONNECTION=sqlite</b>' и настройте её и следующие строчки следующим образом:
+3. Найдите файл <b>.env.example</b>, переименуйте его в <b>.env</b> и настройте связь с вашей базой данных MySQL. Найдите строчку '<b>DB_CONNECTION=mysql</b>' и введите данные вашей MySQL-базы. Пример:
 ```
 DB_CONNECTION=mysql
 DB_HOST=YOUR_database_host
@@ -33,7 +33,11 @@ APP_DEBUG=false
 ```
 php artisan migrate
 ```
-
+5. Запустите локальный сервер
+```
+php artisan serve
+```
+6. Переходите в программу Postman и начинайте тестирование
 ## API-методы
 Workspace в Postman: https://www.postman.com/kompreso/workspace/answer-equipment-api/overview (для доступа к localhost требуется скачать и установить приложение Postman)
 
