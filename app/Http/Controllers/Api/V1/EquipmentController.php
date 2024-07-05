@@ -40,7 +40,7 @@ class EquipmentController extends Controller
                 orWhere('serial_number', 'like', '%'.$request->q.'%')->
                 orWhere('desc', 'like', '%'.$request->q.'%');
         }
-        else $query->all();
+        else $query->get();
 
         return new EquipmentCollection($query->paginate(config('api.paginate_page_size', '')));
     }

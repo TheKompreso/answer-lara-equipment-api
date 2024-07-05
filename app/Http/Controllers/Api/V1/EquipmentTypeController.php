@@ -28,7 +28,7 @@ class EquipmentTypeController extends Controller
             $query->where('name', 'like', '%'.$request->q.'%')->
                 orWhere('mask', 'like', '%'.$request->q.'%');
         }
-        else $query->all();
+        else $query->get();
         return new EquipmentTypeCollection($query->paginate(config('api.paginate_page_size', '')));
     }
 }
